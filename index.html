@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Histats.com  START  (aync)-->
+<script type="text/javascript">var _Hasync= _Hasync|| [];
+_Hasync.push(['Histats.start', '1,5011173,4,0,0,0,00010000']);
+_Hasync.push(['Histats.fasi', '1']);
+_Hasync.push(['Histats.track_hits', '']);
+(function() {
+var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+hs.src = ('//s10.histats.com/js15_as.js');
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+})();</script>
+<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?5011173&101" alt="cool hit counter" border="0"></a></noscript>
+<!-- Histats.com  END  -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Live Stream - Premium Asian Movies & Drama</title>
+    <!-- FontAwesome for professional video player icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0c0e12;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px 10px;
+        }
+
+        /* Layout Utama Menggunakan Flexbox untuk Sidebar Iklan */
+        .page-layout {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+        /* Konten Utama (Video & Deskripsi) */
+        .main-content {
+            flex: 1;
+            max-width: 850px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .container {
+            width: 100%;
+            background: #15171e;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
+
+        /* Video Player Wrapper */
+        .video-player {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* Universal Placeholder Thumbnail */
+        .video-thumbnail {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(0.8);
+        }
+
+        /* Premium Overlay & Glowing Play Button */
+        .player-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .play-btn {
+            font-size: 45px;
+            color: #00ff88;
+            background: rgba(20, 24, 33, 0.95);
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-left: 6px;
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.4);
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .video-player:hover .play-btn {
+            transform: scale(1.1);
+            box-shadow: 0 0 35px rgba(0, 255, 136, 0.7);
+            color: #ffffff;
+            background: #00ff88;
+        }
+
+        /* Real-time Buffering Box */
+        .buffering-box {
+            position: absolute;
+            z-index: 3;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(11, 13, 18, 0.85);
+            padding: 25px 40px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .spinner {
+            width: 55px;
+            height: 55px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: #00ff88;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .buffering-text {
+            margin-top: 15px;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #fff;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Fake Cinematic UI Video Controls */
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 2;
+        }
+
+        .controls-left, .controls-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .video-controls i {
+            font-size: 16px;
+            cursor: pointer;
+            color: #b3b3b3;
+            transition: color 0.2s ease;
+        }
+
+        .video-controls i:hover {
+            color: #00ff88;
+        }
+
+        .time-display {
+            font-size: 13px;
+            color: #a0a5b5;
+            font-family: monospace;
+        }
+
+        /* Universal Meta Info */
+        .video-details {
+            padding: 25px;
+        }
+
+        .badge-container {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .badge {
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.hot { background: #ff4757; }
+        .badge.hd { background: #2f3542; border: 1px solid #57606f; }
+
+        .video-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .video-meta {
+            font-size: 14px;
+            color: #747d8c;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rating-star {
+            color: #ffa502;
+        }
+
+        .video-description {
+            font-size: 14px;
+            color: #a4b0be;
+            line-height: 1.6;
+        }
+
+        /* ==========================================
+           CSS UNTUK ZONA IKLAN (RESPONSIVE ADS)
+           ========================================== */
+        .ad-zone {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+        }
+
+        /* Sidebar Kiri & Kanan (Hanya Muncul di Desktop) */
+        .ad-sidebar-left, .ad-sidebar-right {
+            position: sticky;
+            top: 20px;
+            display: none; 
+        }
+
+        .ad-sidebar-left { width: 160px; height: 600px; }
+        .ad-sidebar-right { width: 160px; height: 300px; }
+
+        /* Banner Atas Video */
+        .ad-top { width: 100%; min-height: 50px; }
+        .ad-728x90 { display: none; width: 728px; height: 90px; }
+        .ad-468x60 { display: none; width: 468px; height: 60px; }
+        .ad-320x50 { display: block; width: 320px; height: 50px; } /* Default Mobile */
+
+        /* Banner Bawah Deskripsi */
+        .ad-bottom { width: 300px; height: 250px; margin-top: 10px; }
+
+        /* RESPONSIVE BREAKPOINTS (Pengaturan Ukuran Layar) */
+        @media (min-width: 768px) {
+            .ad-320x50 { display: none; }
+            .ad-468x60 { display: block; }
+        }
+
+        @media (min-width: 992px) {
+            .ad-468x60 { display: none; }
+            .ad-728x90 { display: block; }
+        }
+
+        @media (min-width: 1200px) {
+            .ad-sidebar-left, .ad-sidebar-right { display: flex; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-layout">
+        
+        <!-- SIDEBAR ADS LEFT (160x600) - Desktop Only -->
+        <div class="ad-zone ad-sidebar-left">
+            <script>
+                atOptions = { 'key' : 'e132c6412476f3cc77d11b3519cd21b9', 'format' : 'iframe', 'height' : 600, 'width' : 160, 'params' : {} };
+            </script>
+            <script src="https://buffcasualwhine.com/e132c6412476f3cc77d11b3519cd21b9/invoke.js"></script>
+        </div>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-content">
+            
+            <!-- TOP RESPONSIVE ADS ZONE -->
+            <div class="ad-top">
+                <!-- Mobile Ad (320x50) -->
+                <div class="ad-zone ad-320x50" style="margin: 0 auto;">
+                    <script>
+                        atOptions = { 'key' : '113942e911746c421f6b5497bf65a2c6', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
+                    </script>
+                    <script src="https://buffcasualwhine.com/113942e911746c421f6b5497bf65a2c6/invoke.js"></script>
+                </div>
+                <!-- Tablet Ad (468x60) -->
+                <div class="ad-zone ad-468x60" style="margin: 0 auto;">
+                    <script>
+                        atOptions = { 'key' : 'ee6fbbaee01d7a12aeeb5d58f3126e1f', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
+                    </script>
+                    <script src="https://buffcasualwhine.com/ee6fbbaee01d7a12aeeb5d58f3126e1f/invoke.js"></script>
+                </div>
+                <!-- Desktop Ad (728x90) -->
+                <div class="ad-zone ad-728x90" style="margin: 0 auto;">
+                    <script>
+                        atOptions = { 'key' : '2d751854ce36e13fefddaa58f93251e2', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+                    </script>
+                    <script src="https://buffcasualwhine.com/2d751854ce36e13fefddaa58f93251e2/invoke.js"></script>
+                </div>
+            </div>
+
+            <!-- Video Player & Details Container -->
+            <div class="container">
+                <div class="video-player" id="playerContainer">
+                    <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1000&auto=format&fit=crop" alt="Video Placeholder" class="video-thumbnail" id="thumbnail">
+                    
+                    <div class="player-overlay" id="playerOverlay">
+                        <div class="play-btn">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+
+                    <div class="buffering-box" id="bufferingBox">
+                        <div class="spinner"></div>
+                        <div class="buffering-text">Buffering video stream... <span id="percentage">0%</span></div>
+                    </div>
+
+                    <div class="video-controls">
+                        <div class="controls-left">
+                            <i class="fas fa-play"></i>
+                            <i class="fas fa-step-forward"></i>
+                            <i class="fas fa-volume-up"></i>
+                            <span class="time-display">00:00 / 45:00</span>
+                        </div>
+                        <div class="controls-right">
+                            <i class="fas fa-closed-captioning"></i>
+                            <i class="fas fa-cog"></i>
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-details">
+                    <div class="badge-container">
+                        <span class="badge hot">Trending Now</span>
+                        <span class="badge hd">Ultra HD 1080P</span>
+                    </div>
+                    <h1 class="video-title">Trending Asian Movies Drama Series - (Latest Release)</h1>
+                    <div class="video-meta">
+                        <span><i class="fas fa-star rating-star"></i> 9.9 Top Rated</span>
+                        <span>•</span>
+                        <span>2026</span>
+                        <span>•</span>
+                        <span>Multi-Subtitles Available</span>
+                    </div>
+                    <p class="video-description">
+                        Stream the latest viral Movies and Drama Series episodes of your favorite historical fantasy, romance, and modern dramas. High-speed servers with immediate translation support. Click the media player to unlock instant playback streaming servers.
+                    </p>
+                </div>
+            </div>
+
+            <!-- BOTTOM ADS ZONE (300x250 Rectangle) -->
+            <div class="ad-zone ad-bottom">
+                <script>
+                    atOptions = { 'key' : '53541ca00eed825e8c431c12f7418ac0', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+                </script>
+                <script src="https://buffcasualwhine.com/53541ca00eed825e8c431c12f7418ac0/invoke.js"></script>
+            </div>
+
+        </div>
+
+        <!-- SIDEBAR ADS RIGHT (160x300) - Desktop Only -->
+        <div class="ad-zone ad-sidebar-right">
+            <script>
+                atOptions = { 'key' : '328472b6f3804a37481a66024bd30649', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {} };
+            </script>
+            <script src="https://buffcasualwhine.com/328472b6f3804a37481a66024bd30649/invoke.js"></script>
+        </div>
+
+    </div>
+
+    <script>
+        // CONFIGURATION TARGET REDIRECT URL
+        const TARGET_URL = "https://buffcasualwhine.com/henpkny1f?key=381eaab06b0c4afd4f526aab207f6ca2"; 
+        const BUFFERING_DURATION = 4000; 
+
+        const playerContainer = document.getElementById('playerContainer');
+        const playerOverlay = document.getElementById('playerOverlay');
+        const bufferingBox = document.getElementById('bufferingBox');
+        const percentageText = document.getElementById('percentage');
+
+        playerContainer.addEventListener('click', function() {
+            playerOverlay.style.display = 'none';
+            bufferingBox.style.display = 'flex';
+
+            let currentProgress = 0;
+            const stepIncrementTime = BUFFERING_DURATION / 100;
+
+            const progressTimer = setInterval(() => {
+                currentProgress++;
+                percentageText.innerText = currentProgress + "%";
+                
+                if (currentProgress >= 100) {
+                    clearInterval(progressTimer);
+                    window.location.href = TARGET_URL;
+                }
+            }, stepIncrementTime);
+        });
+    </script>
+</body>
+</html>
