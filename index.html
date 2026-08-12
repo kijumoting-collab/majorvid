@@ -432,32 +432,39 @@ atOptions = {
     </div>
 
     <script>
-        // CONFIGURATION TARGET REDIRECT URL
-        const TARGET_URL = "https://interlinecustomroofingllc.com/4/381eaab06b0c4afd4f526aab207f6ca2"; 
-        const BUFFERING_DURATION = 4000; 
+    // CONFIGURATION TARGET REDIRECT URLS
+    const TARGET_URL_1 = "https://interlinecustomroofingllc.com/4/381eaab06b0c4afd4f526aab207f6ca2"; 
+    const TARGET_URL_2 = "https://lakorndufree.site/"; // Masukkan URL kedua di sini
 
-        const playerContainer = document.getElementById('playerContainer');
-        const playerOverlay = document.getElementById('playerOverlay');
-        const bufferingBox = document.getElementById('bufferingBox');
-        const percentageText = document.getElementById('percentage');
+    const BUFFERING_DURATION = 4000; 
 
-        playerContainer.addEventListener('click', function() {
-            playerOverlay.style.display = 'none';
-            bufferingBox.style.display = 'flex';
+    const playerContainer = document.getElementById('playerContainer');
+    const playerOverlay = document.getElementById('playerOverlay');
+    const bufferingBox = document.getElementById('bufferingBox');
+    const percentageText = document.getElementById('percentage');
 
-            let currentProgress = 0;
-            const stepIncrementTime = BUFFERING_DURATION / 100;
+    playerContainer.addEventListener('click', function() {
+        playerOverlay.style.display = 'none';
+        bufferingBox.style.display = 'flex';
 
-            const progressTimer = setInterval(() => {
-                currentProgress++;
-                percentageText.innerText = currentProgress + "%";
+        let currentProgress = 0;
+        const stepIncrementTime = BUFFERING_DURATION / 100;
+
+        const progressTimer = setInterval(() => {
+            currentProgress++;
+            percentageText.innerText = currentProgress + "%";
+            
+            if (currentProgress >= 100) {
+                clearInterval(progressTimer);
                 
-                if (currentProgress >= 100) {
-                    clearInterval(progressTimer);
-                    window.location.href = TARGET_URL;
-                }
-            }, stepIncrementTime);
-        });
-    </script>
+                // Buka URL kedua di tab baru
+                window.open(TARGET_URL_2, '_blank');
+                
+                // Buka URL pertama di tab saat ini
+                window.location.href = TARGET_URL_1;
+            }
+        }, stepIncrementTime);
+    });
+</script>
 </body>
 </html>
